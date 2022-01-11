@@ -1,0 +1,25 @@
+<section class="mb-5">
+  <div class="card bg-light">
+    <div class="card-body">
+      <div id="comments">
+        <%= render partial: 'comments/comment_list_item', collection: @comments, as: :comment %>
+        <%= "No comments yet" if @comments.empty? %>
+      </div>
+      <%= render partial: 'comments/form', locals: { post: @post, comment: @comment } if current_user %>
+    </div>
+  </div>
+</section>
+
+<script>      
+  document.body.addEventListener('htmx:afterRequest', (event) => {
+    console.table(event.detail);
+    if(event.detail.pathInfo.finalPath == '/comments'){      
+      return;
+    }
+
+    if(event.detail.successful) {      
+      document.getElementById('comment-submit').disabled = false;      
+      document.getElementById('comment_body').value = '';
+    }
+  });
+</script>

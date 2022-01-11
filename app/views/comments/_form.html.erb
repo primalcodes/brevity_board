@@ -1,0 +1,18 @@
+<%= form_with(model: [post, comment], html: {'hx-post': post_comments_path(post), 'hx-target': '#comments', 'hx-swap': 'beforeend'}, class: 'mb-4') do |form| %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">    
+    <%= form.text_area :body, required: true, class: 'form-control mb-3', rows: '3', placeholder: 'Join the discussion and leave a comment!' %>
+    <%= form.submit class: 'btn btn-primary', id: 'comment-submit' %>
+  </div>
+<% end %>

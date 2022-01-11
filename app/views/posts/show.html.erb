@@ -1,0 +1,13 @@
+<header class="mb-4">
+  <h1 class=" fs-3 fw-bolder mb-1 text-truncate"><%= @post.title %></h1>  
+  <small class="text-muted fst-italic mb-2">
+    Posted on <%= @post.created_at.strftime('%A, %d %b %Y %l:%M %p') %> by <%= @post.author.name %>
+    <%= link_to 'Edit', edit_post_path(@post) if post_owner?(post: @post) %>
+  </small>  
+</header>
+<section class="mb-5 bg-light p-5">
+  <p class="fs-5 mb-4"><%= @post.body %></p>  
+</section>
+
+<%# Lazy loading comments %>
+<div hx-get="<%= post_comments_path(@post) %>" hx-trigger="load">Loading comments ...</div>

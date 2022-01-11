@@ -1,0 +1,12 @@
+<% unless current_user %>
+  <div class="alert alert-primary" role="alert">
+    <a title="Login" class="" data-bs-toggle="modal" data-bs-target="#postModal" hx-get="<%= new_user_session_path %>" hx-target="#postModal" hx-swap="innerHTML">
+      Login
+    </a>
+    or
+    <a title="Sign up" class="" data-bs-toggle="modal" data-bs-target="#postModal" hx-get="<%= new_user_registration_path %>" hx-target="#postModal" hx-swap="innerHTML">
+      sign up
+    </a>
+    to add a new post and comment
+  </div>
+<% end %> 

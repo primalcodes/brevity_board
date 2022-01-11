@@ -1,0 +1,87 @@
+Users
+	name
+	email
+	password
+
+Posts
+	title
+	body
+	user_id (author)
+	
+Comments
+	post_id
+	user_id
+	body
+	
+devise
+- name/email/password on sign_up
+- user profile page with about me/avatar?
+
+Routes
+- devise
+- posts do
+	comments
+
+Use option --skip-webpack-install when generating a new app
+
+remove Webpacker from Gemfile and bundle install
+
+Add //= link_directory ../javascripts .js to app/assets/config/manifest.js
+
+Restore app/assets/javascripts/application.js (copy from a Rails 5 repo)
+
+Change javascript_pack_tag to javascript_include_tag in app/views/application/layout.html.erb
+
+gem install rails -v '6.1.1.4'
+rails _6.1.4.4_ new brevity_board -d postgresql -T --skip-webpack-install --skip javascript
+# https://stackoverflow.com/questions/55213868/rails-6-how-to-disable-webpack-and-use-sprockets-instead
+# remove webpacker gem
+# add gem 'sprockets'#, '~> 4'
+# add gem 'sprockets-rails', :require => 'sprockets/railtie'
+# restore javascript dir: touch app/assets/javascripts/application.js
+
+# If you are using sprockets 4, change app/assets/config/manifest.js to:
+#
+# //= link_tree ../images
+# //= link application.js
+# //= link application.css
+
+# Change javascript_pack_tag to javascript_include_tag in app/views/layout/application.html.erb
+
+# touch app/assets/images/.keep
+# change application.css to .scss
+
+gem 'rspec-rails', '~> 5.0.0'
+# add to dev/test section in gemfile
+# rails generate rspec:install
+
+rails generate rspec:install
+
+gem 'factory_bot_rails'
+# SETUP: https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#rspec
+
+gem 'faker'
+
+gem 'bootstrap', '~> 5.1.3'
+# SETUP: https://github.com/twbs/bootstrap-rubygem
+gem 'jquery-rails'
+
+gem 'devise'
+
+
+
+# SETUP: https://github.com/heartcombo/devise
+# https://github.com/heartcombo/devise#strong-parameters (the lazy way™)
+rails generate devise:install
+rails generate devise User
+rails db:migrate
+rails g migration add_user_details_to_user name about_me:text
+rails db:migrate
+rails generate devise:views users
+
+rails g scaffold post user_id:integer title body:text
+rails g scaffold comment post:references user:references body:text
+rails db:migrate
+
+
+

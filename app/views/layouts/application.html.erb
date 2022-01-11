@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BrevityBoard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">          
+          <span class="fs-3">Brevity Board</span>
+        </a>
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a href="<%= root_path %>" class="nav-link btn" aria-current="page">Home</a></li>         
+          <% if current_user %>
+            <li class="nav-item">
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link btn btn-warning', title: "Logout #{current_user.name}" %>
+            </li>
+          <% end %>          
+          <%= render partial: 'layouts/login_links' unless current_user %> 
+        </ul>
+      </header>
+
+      <%= render partial: 'layouts/signup_cta' if controller_name == 'posts' %>      
+      <%= render partial: 'layouts/alerts' %>   
+      <%= yield %>
+    </div>
+
+    <%= render partial: 'posts/modal' %>
+  
+    <%# Sending along the CSRF token value. %>
+    <%# This snippet needs to be right before the end of the body to trigger %>
+    <script>      
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+      document.body.addEventListener('htmx:configRequest', (event) => {        
+        event.detail.headers['X-CSRF-Token'] = csrfToken;
+      });
+    </script>
+  </body>
+</html>

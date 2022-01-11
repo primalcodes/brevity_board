@@ -1,0 +1,12 @@
+<% if post.errors.any? %>
+  <div id="form-errors" class="alert alert-danger" role="alert" hx-swap-oob="true">
+    <h4>
+      <%= pluralize(post.errors.size, 'error') %> prevented this post from saving:
+    </h4>
+    <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,36 @@
+<% if current_user %>     
+  <a type="button" title="Add New Post" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#postModal" hx-get="<%= new_post_path %>?modal=true" hx-target=".modal-content" hx-swap="innerHTML">
+    Add New Post
+  </a>
+<% end %>
+
+<br/>
+<div class="row">
+  <div id='posts' class="col-md-8 border-top mt-3 pt-3">
+    <%= render partial: 'posts/post_list_item', collection: @posts, as: 'post' %>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        5 Most popular posts by comments
+      </div>
+      <div class="card-body">        
+        <p class="card-text">
+          <ol>
+            <% Post.top_5.each do |post| %>
+              <li><%= link_to(post.title.truncate(30), post, title: post.title) %> 
+              <small class="text-muted">(<%= post.comments_count %>)</small></li>
+            <% end %>
+          </ol>          
+        </p>
+      </div>
+    </div>
+  
+  </div>
+</div>
+<br>
+
+<div class="text-center">
+  <%= link_to "<< Prev", "?page=#{@paging[:prev_page]}", class: "btn btn-link #{'disabled' if @paging[:prev_page].nil?}" %>
+  <%= link_to "Next >>", "?page=#{@paging[:next_page]}", class: "btn btn-link #{'disabled' if @paging[:next_page].nil?}"%>
+</div>

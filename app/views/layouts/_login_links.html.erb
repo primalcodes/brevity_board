@@ -1,0 +1,52 @@
+<li class="nav-item">            
+  <%= 
+    if %w(registrations sessions).include?(controller_name)
+      link_to(
+        'Sign up',
+        new_user_registration_path,                    
+        title: 'Sign up',
+        class: 'nav-link'
+      )
+    else
+      link_to(
+        'Sign up',
+        new_user_registration_path,
+        data: {
+          'bs-toggle': 'modal',
+          'bs-target': '#postModal'
+        },
+        title: 'Sign up',
+        class: 'nav-link',
+        'hx-get': new_user_registration_path,
+        'hx-target': '#postModal',
+        'hx-swap': 'innerHTML'                
+      ) 
+    end  
+  %>
+</li>
+<li>
+  <%= 
+    if %w(registrations sessions).include?(controller_name)
+      link_to(
+        'Login',
+        new_user_session_path,                    
+        title: 'Login',
+        class: 'nav-link'
+      )
+    else
+      link_to(
+        'Login',
+        new_user_session_path,
+        data: {
+          'bs-toggle': 'modal',
+          'bs-target': '#postModal'
+        },
+        title: 'Login',
+        class: 'nav-link',
+        'hx-get': new_user_session_path,
+        'hx-target': '#postModal',
+        'hx-swap': 'innerHTML'
+      )
+    end
+  %>
+</li>

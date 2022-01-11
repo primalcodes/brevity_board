@@ -1,0 +1,10 @@
+<div id="comment_<%= comment.id %>" class="d-flex mb-3">  
+  <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg?text=<%= comment.author.initials %>" alt="..."></div>
+  <div class="ms-3 pb-3 border-bottom">
+    <div>
+      <span class="author fw-bold"><%= comment.author.name %></span> 
+      <span class="text-muted fst-italic mb-2">at <%= comment.created_at.strftime('%b %d, %Y %l:%M %p') %></span>
+    </div> 
+    <%= comment.body %>
+  </div>
+</div>   
